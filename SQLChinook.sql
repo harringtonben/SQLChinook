@@ -39,4 +39,28 @@ where e.title = 'Sales Support Agent'
 select distinct firstname, lastname from Employee
 where title = 'Sales Support Agent'
 
+--Provide a query that shows the Invoice Total, Customer name, Country and Sale Agent name for all invoices and customers.
+select i.Total, e.firstname + ' ' + e.lastname as [Sales Agent], i.BillingCountry, c.FirstName + ' ' + c.LastName as [Customer Name] 
+from Employee e
+join customer c on c.SupportRepId = e.EmployeeId
+join invoice i on i.CustomerId = c.CustomerId
+where e.title = 'Sales Support Agent'
 
+--How many Invoices were there in 2009 and 2011?
+select count(*) as [Total Invoices] from Invoice
+where InvoiceDate like '%2009%'
+or InvoiceDate like '%2011%'
+
+--What are the respective total sales for each of those years?
+select count(*) as [Total Invoices], DATENAME(yyyy, InvoiceDate) as Year from Invoice
+where InvoiceDate like '%2009%'
+or InvoiceDate like '%2011%'
+group by DATENAME(yyyy, InvoiceDate)
+
+-- Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for Invoice ID 37.
+select count(*) as [Total Number of Line Items] from InvoiceLine
+where InvoiceId = 37
+ 
+--checking work of that query
+select * from InvoiceLine
+where InvoiceId = 37
