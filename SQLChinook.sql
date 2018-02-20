@@ -64,3 +64,21 @@ where InvoiceId = 37
 --checking work of that query
 select * from InvoiceLine
 where InvoiceId = 37
+
+--Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for each Invoice.
+select InvoiceId, count(*) as [Lines per invoice] from InvoiceLine
+
+--Provide a query that includes the purchased track name with each invoice line item.
+select t.name as [Track Name], i.InvoiceLineId from Track t
+join InvoiceLine i on i.TrackId = t.TrackId
+
+--Provide a query that includes the purchased track name AND artist name with each invoice line item.
+select t.name as [Track Name], ar.Name as [Artist Name], i.InvoiceLineId from Track t
+join InvoiceLine i on i.TrackId = t.TrackId
+join Album a on a.AlbumId = t.AlbumId
+join Artist ar on ar.ArtistId = a.ArtistId
+
+--Provide a query that shows the # of invoices per country
+select BillingCountry, count(*) as [Number of Invoices] from Invoice
+group by BillingCountry
+
