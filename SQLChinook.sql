@@ -148,16 +148,28 @@ where SupportRepId = 5
 --Provide a query that shows the total sales per country
 select BillingCountry, count(*) as [Sales Per Country] from Invoice
 group by BillingCountry
+order by BillingCountry
 
 --Which country's customers spent the most
-/*with Country_CTE ([Billing Country], [Total Spent]) As
+with Country_CTE ([Billing Country], [Total Spent]) As
 (
 select BillingCountry, SUM(total) as [Total Spent]from Invoice
 group by BillingCountry
 )
 
 select * from Country_CTE
-order by [Total Spent] Desc*/
+order by [Total Spent] Desc
+
+--Provide a query that shows the most purchased track of 2013
+with Purchased_Track_CTE ([Song Name], [Total Sales]) As
+(
+select distinct t.Name, count(*) as totalSales from track t
+join InvoiceLine i on i.TrackId = t.TrackId
+group by t.name
+)
+
+select MAX([Song Name]) as [Song Name], [Total Sales] from Purchased_Track_CTE
+group by [Total Sales]
 
 
 
