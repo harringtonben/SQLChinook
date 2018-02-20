@@ -67,6 +67,7 @@ where InvoiceId = 37
 
 --Looking at the InvoiceLine table, provide a query that COUNTs the number of line items for each Invoice.
 select InvoiceId, count(*) as [Lines per invoice] from InvoiceLine
+group by InvoiceId
 
 --Provide a query that includes the purchased track name with each invoice line item.
 select t.name as [Track Name], i.InvoiceLineId from Track t
@@ -103,6 +104,41 @@ join MediaType mt on mt.MediaTypeId = t.MediaTypeId
 --checking work 
 select * from track
 where name = 'Balls to the Wall'
+
+--Provide a query that shows all Invoices but includes the # of invoice line items
+select InvoiceId, count(*) as [Lines per invoice] from InvoiceLine
+group by InvoiceId
+
+--Provide a query that shows total sales made by each sales agent
+select e.FirstName + ' ' + e.LastName as [Sales agent], count(*) as [Number of Sales] from Employee e
+join Customer c on c.supportrepid = e.employeeid
+join Invoice i on i.customerid = c.customerid
+group by e.firstname, e.lastname
+
+--Which sales agent made the most in sales in 2009
+select e.FirstName + ' ' + e.LastName as [Sales agent],count(*) as [Number of Sales in 2009] from Employee e
+join Customer c on c.supportrepid = e.employeeid
+join Invoice i on i.customerid = c.customerid
+where DATENAME(yyyy, i.InvoiceDate) like '%2009%'
+group by e.firstname, e.lastname
+order by count(*) desc
+
+--Which sales agent made the most in sales over all
+select e.EmployeeId, e.FirstName + ' ' + e.LastName as [Employee Name], SUM(i.total) as [Total Invoice Amount] from Employee e
+join Customer c on c.supportrepid = e.employeeid
+join Invoice i on i.customerid = c.customerid
+group by e.EmployeeId, e.firstname, e.LastName
+
+--Provide a query that shows the count of customers assigned to each sales agent
+select e.firstname + ' ' + e.lastname as [Employee Name], count(*) as [Number of Customers] from Employee e
+join Customer c on c.SupportRepId = e.EmployeeId
+group by e.FirstName, e.LastName
+
+--checking work
+select * from employee
+select count(*) from customer 
+where SupportRepId = 5
+
 
 
 
