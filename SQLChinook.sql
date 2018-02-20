@@ -124,10 +124,16 @@ group by e.firstname, e.lastname
 order by count(*) desc
 
 --Which sales agent made the most in sales over all
+with Sales_CTE (EmployeeID, [Employee Name], [Total Invoice Amount]) As
+(
 select e.EmployeeId, e.FirstName + ' ' + e.LastName as [Employee Name], SUM(i.total) as [Total Invoice Amount] from Employee e
 join Customer c on c.supportrepid = e.employeeid
 join Invoice i on i.customerid = c.customerid
 group by e.EmployeeId, e.firstname, e.LastName
+)
+
+select [Employee Name], MAX([Total Invoice Amount]) from Sales_CTE
+group by [Employee Name]
 
 --Provide a query that shows the count of customers assigned to each sales agent
 select e.firstname + ' ' + e.lastname as [Employee Name], count(*) as [Number of Customers] from Employee e
@@ -138,6 +144,22 @@ group by e.FirstName, e.LastName
 select * from employee
 select count(*) from customer 
 where SupportRepId = 5
+
+--Provide a query that shows the total sales per country
+select BillingCountry, count(*) as [Sales Per Country] from Invoice
+group by BillingCountry
+
+--Which country's customers spent the most
+/*with Country_CTE ([Billing Country], [Total Spent]) As
+(
+select BillingCountry, SUM(total) as [Total Spent]from Invoice
+group by BillingCountry
+)
+
+select * from Country_CTE
+order by [Total Spent] Desc*/
+
+
 
 
 
