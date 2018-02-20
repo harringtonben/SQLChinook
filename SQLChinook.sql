@@ -82,3 +82,32 @@ join Artist ar on ar.ArtistId = a.ArtistId
 select BillingCountry, count(*) as [Number of Invoices] from Invoice
 group by BillingCountry
 
+/* Provide a query that shows the total number of tracks in each playlist. 
+The Playlist name should be include on the resulant table. */
+select pl.name as [Playlist Name], count(*) as [Tracks Per Playlist] from Playlist pl
+join PlaylistTrack pt on pl.PlaylistId = pt.PlaylistId
+group by pl.Name
+
+--checking work
+select * from Playlist
+select count(*) from PlaylistTrack
+where PlaylistId = 1 
+or PlaylistId = 8
+
+--Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre
+select t.name as [Track Name], al.title as [Album Name], g.name as [Genre Name], mt.name as [Media Type] from track t
+join Album al on al.AlbumId = t.TrackId
+join Genre g on g.GenreId = t.GenreId
+join MediaType mt on mt.MediaTypeId = t.MediaTypeId
+
+--checking work 
+select * from track
+where name = 'Balls to the Wall'
+
+
+
+
+
+
+
+
